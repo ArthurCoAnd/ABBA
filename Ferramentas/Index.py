@@ -1,21 +1,12 @@
 # Importar Biblioteclas
 import csv
 import math
-import json
 import os
 import pandas as pd
-from pprint import pprint
 import statistics as st
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
 # Importar Ferramentas
 from Ferramentas.Álbum import Álbum
 from Ferramentas.Título import Título
-# Importar Autenticadores
-from auth import *
-
-# Fazer "Login" Spotfy
-sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=cID,client_secret=cS))
 
 class Index:
 	def __init__(self):
@@ -93,25 +84,6 @@ class Index:
 		df = pd.DataFrame(dados, index=self.nome, columns=cabeçalho)
 		dfs = df.sort_values(by=['Pontuação'], ascending=False)
 		return str(dfs.head(x))
-
-	def ProcurarID(self, arq):
-		alb = []
-		# Ler Aqrquivo com Artista e Nome
-		with open(arq+".csv", encoding="utf-8") as arq_csv:
-			leitor = csv.reader(arq_csv)
-			for artista, nome in leitor:
-				Título(artista+" - "+nome,"=")
-				busca = sp.search(nome,limit=1,type='album')
-				# id = print(busca['albums']['items'][0]['id'])
-				try:
-					id = busca['albums']['items'][0]['id']
-					alb.append([artista,nome,id])
-				except:
-					print("Álbum não cadastrado!!!")
-		# Criar Arquivo com Artista, Nome e id
-		with open(arq+"IDX.csv", "w", newline="", encoding="utf-8") as arq_csv:
-			escritor = csv.writer(arq_csv)
-			escritor.writerows(alb)
 	
 	def AdicionarCSVIndex(self, arq):
 		with open(arq+".csv", encoding="utf-8") as arq_csv:

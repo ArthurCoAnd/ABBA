@@ -2,15 +2,8 @@
 import csv
 import pandas as pd
 import statistics as st
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
 # Improtar Ferramentas
 from Ferramentas.Título import Título
-# Importar Autenticadores
-from auth import *
-
-# Fazer "Login" Spotfy
-sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=cID,client_secret=cS))
 
 class Álbum:
 	def __init__(self, Artista, Nome, id):
@@ -74,38 +67,6 @@ class Álbum:
 		self.bpm = []
 		self.Mbpm = None
 		self.DPbpm = None
-
-	def RegistrarÁlbum(self):
-		# Baixar Dados URL Spotfy
-		dA = sp.album_tracks(self.id)
-
-		# Cadastrar Músicas do Álbum
-		for i, m in enumerate(dA['items']):
-			# Dados Gerais
-			self.nomeMúsica.append(m['name'])
-			self.idMúsica.append(m['id'])
-
-			# Dados Música
-			dM = sp.track(self.idMúsica[i])
-			self.duração.append(float(int(dM['duration_ms'])/1000))
-			self.popularidade.append(dM['popularity'])
-
-			# Características Música
-			cM = sp.audio_features(self.idMúsica[i])
-			self.tom.append(int(cM[0]['key']))
-			self.modoTom.append(int(cM[0]['mode']))
-			self.tempo.append(int(cM[0]['time_signature']))
-			self.acústico.append(float(cM[0]['acousticness']))
-			self.dançabilidade.append(float(cM[0]['danceability']))
-			self.energia.append(float(cM[0]['energy']))
-			self.instrumental.append(float(cM[0]['instrumentalness']))
-			self.audiência.append(float(cM[0]['liveness']))
-			self.barulho.append(float(cM[0]['loudness']))
-			self.fala.append(float(cM[0]['speechiness']))
-			self.felicidade.append(float(cM[0]['valence']))
-			self.bpm.append(float(cM[0]['tempo']))
-
-		self.CacularEstatísticas()
 
 	def CacularEstatísticas(self):
 			# duration_ms

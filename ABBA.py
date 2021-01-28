@@ -1,19 +1,8 @@
 # Importar Biblioteclas
-import csv
-import os
-import pandas as pd
 import PySimpleGUI as psg
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
 # Improtar Classes
-from Ferramentas.Álbum import Álbum
 from Ferramentas.Index import Index
 from Ferramentas.Título import Título
-# Importar Autenticadores
-from auth import *
-
-# Fazer "Login" Spotfy
-sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=cID,client_secret=cS))
 
 class Aplicativo:
 	def __init__(self):
@@ -53,9 +42,3 @@ if __name__ == "__main__":
 	psg.theme('DarkAmber')
 	app = Aplicativo()
 	app.Iniciar()
-
-	# # Exemplo de Código de Download e Cálculo de um Álbum Específico
-	# alb = Álbum("The Strokes","The New Abnormal","2xkZV2Hl1Omi8rk2D7t5lN")
-	# alb.RegistrarÁlbum()
-	# alb.Imprimir()
-
